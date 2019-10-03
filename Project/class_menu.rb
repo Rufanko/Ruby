@@ -9,6 +9,8 @@ require_relative 'cargovagon.rb'
 require_relative 'cargo_train.rb'
 require_relative 'main_menu.rb'
 require_relative 'class_menu.rb'
+require_relative 'instance_counter.rb'
+require_relative 'module_manufacturer.rb'
 class Menu
   attr_accessor :trains, :routes, :stationlist, :vagons
   def initialize
@@ -113,9 +115,7 @@ class Menu
     putsstation
     k = gets.to_i
     i = gets.to_i
-    if !@routes.nil? && !@stationlist[k].nil?
-      @routes[i].add_st(@stationlist[k])
-    end
+    @routes[i].add_st(@stationlist[k]) if !@routes.nil? && !@stationlist[k].nil?
     end
 
   def accelerate
@@ -139,14 +139,12 @@ class Menu
     i = gets.to_i
     j = -1
     k = -1
-    @routes.each do |x| 
-    puts "Введите #{j += 1} чтобы выбрать маршрут"
-    @routes[k += 1].stations.each {|y| puts y.name}
+    @routes.each do |_x|
+      puts "Введите #{j += 1} чтобы выбрать маршрут"
+      @routes[k += 1].stations.each { |y| puts y.name }
     end
     k = gets.to_i
-    if !@trains[i].nil? && !@routes[k].nil?
-      @trains[i].route_add(@routes[k])
-    end
+    @trains[i].route_add(@routes[k]) if !@trains[i].nil? && !@routes[k].nil?
      end
 
   def move_forward
@@ -226,7 +224,7 @@ class Menu
     @routes.each { |x| puts "Введите #{j += 1}, чтобы выбрать маршрут", x }
     end
 
-    private
+  private
 
   def create_cargo_train
     puts 'Введите имя объекта'
