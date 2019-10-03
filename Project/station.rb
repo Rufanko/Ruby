@@ -5,6 +5,7 @@ class Station
   include InstanceCounter
   attr_reader :trainlist, :name
 
+  NAME_FORMAT = /^([a-zA-Z]){2,12}$/.freeze
   @@allstations = []
 
   def initialize(name)
@@ -12,6 +13,14 @@ class Station
     @trainlist = []
     @@allstations << self
     register_instance
+    validate!
+  end
+
+  def validate?
+    validate!
+    true
+  rescue RuntimeError
+    false
   end
 
   def self.all
@@ -29,4 +38,11 @@ class Station
   def count(type)
     @trainlist.count { |train| train.type == type }
   end
+
+  protected
+
+  def validate!
+    raise "name can't be nil" if name.nil?
+    raise 'name has invalid format' if name !~ NAME_FORMAT
+end
 end

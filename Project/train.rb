@@ -6,18 +6,27 @@ class Train
   include Manufacturer
   include InstanceCounter
   attr_accessor :list_of_vagons, :type, :number, :speed
-  @@all_trains = []
+  @@all_trains = Hash.new
+  NUMBER_FORMAT = /^([a-z]|[1-9]){3}-?([a-z]|[1-9]){2}$/.freeze # /\w{3}-?\w{2}/
   def initialize(type, number)
     @type = type
     @number = number
     @list_of_vagons = []
     @speed = 0
-    @@all_trains << self
+    @@all_trains[number] = self
     register_instance
+    validate!
+  end
+
+  def validate?
+    validate!
+    true
+  rescue RuntimeError
+    false
   end
 
   def self.find(num)
-    @@all_trains.find { |train| train.number == num }
+    @@all_trains[num]
   end
 
   def speed_up(speed)
@@ -74,5 +83,11 @@ class Train
       current_station.take_train(self)
 
     end
+  end
+
+  def validate!
+    raise "type can't be nil" if type.nil?
+    raise "number can't be nil" if number.nil?
+    raise 'number has invalid format' if number !~ NUMBER_FORMAT
   end
 end

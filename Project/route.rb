@@ -8,6 +8,7 @@ class Route
   def initialize(first_station, last_station)
     @stations = [first_station, last_station]
     register_instance
+    validate!
   end
 
   def add_st(n = 1, station)
@@ -27,6 +28,19 @@ class Route
   end
 
   def show_stations_names
-    puts @stations
+    @stations
+  end
+
+  def validate?
+    validate!
+    true
+  rescue RuntimeError
+    false
+  end
+
+  protected
+
+  def validate!
+    raise 'first and last stations cant be the same ' if @stations[0].name == @stations[1].name
   end
 end

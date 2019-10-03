@@ -33,9 +33,25 @@ class Menu
     users_string = gets.chomp!
     case users_string
     when '1'
+      begin
       create_pass_train
+      puts 'Пассажирский поезд создан'
+      rescue RuntimeError
+        puts 'Введите корректный номер поезда'
+        attempt ||= 0
+        attempt += 1
+        retry unless attempt > 2
+    end
     when '2'
+      begin
       create_cargo_train
+      puts 'Грузовой поезд создан'
+      rescue RuntimeError
+        puts 'Введите корректный номер поезда'
+        attempt ||= 0
+        attempt += 1
+        retry unless attempt > 2
+    end
     end
     end
 
@@ -227,18 +243,15 @@ class Menu
   private
 
   def create_cargo_train
-    puts 'Введите имя объекта'
-    trainname = gets.chomp!
     puts 'Введите номер поезда'
     number_of_train = gets.chomp!
-    @trains << trainname = CargoTrain.new(number_of_train)
+    @trains << CargoTrain.new(number_of_train)
     end
 
   def create_pass_train
-    puts 'Введите имя объекта'
-    trainname = gets.chomp
     puts 'Введите номер поезда'
     number_of_train = gets.chomp
-    @trains << trainname = PassengerTrain.new(number_of_train)
-    end
+
+    @trains << PassengerTrain.new(number_of_train)
+  end
 end
