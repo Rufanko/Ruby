@@ -1,13 +1,23 @@
 # frozen_string_literal: true
 
+require_relative 'module_manufacturer.rb'
+require_relative 'instance_counter.rb'
 class Train
+  include Manufacturer
+  include InstanceCounter
   attr_accessor :list_of_vagons, :type, :number, :speed
-
+  @@all_trains = []
   def initialize(type, number)
     @type = type
     @number = number
     @list_of_vagons = []
     @speed = 0
+    @@all_trains << self
+    register_instance
+  end
+
+  def self.find(num)
+    @@all_trains.find { |train| train.number == num }
   end
 
   def speed_up(speed)
@@ -19,9 +29,7 @@ class Train
   end
 
   def take_vagon(vagon)
-    if speed == 0 
-      @list_of_vagons.push(vagon) 
-    end
+    @list_of_vagons.push(vagon) if speed == 0
   end
 
   def delete_vagon(vagon)
