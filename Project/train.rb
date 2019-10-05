@@ -3,26 +3,20 @@
 require_relative 'module_manufacturer.rb'
 require_relative 'instance_counter.rb'
 class Train
+  include Valid
   include Manufacturer
   include InstanceCounter
   attr_accessor :list_of_vagons, :type, :number, :speed
-  @@all_trains = Hash.new
+  @@all_trains = {}
   NUMBER_FORMAT = /^([a-z]|[1-9]){3}-?([a-z]|[1-9]){2}$/.freeze # /\w{3}-?\w{2}/
   def initialize(type, number)
     @type = type
     @number = number
+    validate!
     @list_of_vagons = []
     @speed = 0
     @@all_trains[number] = self
     register_instance
-    validate!
-  end
-
-  def validate?
-    validate!
-    true
-  rescue RuntimeError
-    false
   end
 
   def self.find(num)

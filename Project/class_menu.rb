@@ -211,7 +211,7 @@ class Menu
     putsroute
     i = gets.to_i
     @routes[i]&.stations&.each { |x| puts x.name }
-     end
+  end
 
   private
 

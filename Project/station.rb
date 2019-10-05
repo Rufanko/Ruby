@@ -1,7 +1,9 @@
 # frozen_string_literal: true
 
 require_relative 'instance_counter.rb'
+require_relative 'module_manufacturer.rb'
 class Station
+  include Valid
   include InstanceCounter
   attr_reader :trainlist, :name
 
@@ -10,17 +12,10 @@ class Station
 
   def initialize(name)
     @name = name
+    validate!
     @trainlist = []
     @@allstations << self
     register_instance
-    validate!
-  end
-
-  def validate?
-    validate!
-    true
-  rescue RuntimeError
-    false
   end
 
   def self.all
