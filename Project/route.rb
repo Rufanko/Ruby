@@ -9,10 +9,8 @@ class Route
   attr_reader :stations
 
   def initialize(first_station, last_station)
-    @first_station = first_station
-    @last_station = last_station
-    validate!
     @stations = [first_station, last_station]
+    validate!
     register_instance
   end
 
@@ -39,7 +37,7 @@ class Route
   protected
 
   def validate!
-    raise 'first and last stations cant be the same ' if @first_station == @last_station
-    raise 'wrong objects' unless @first_station.instance_of?(Station) && @last_station.instance_of?(Station)
+    raise 'first and last stations cant be the same ' if first_station == last_station
+    raise 'wrong objects' unless first_station.instance_of?(Station) && last_station.instance_of?(Station)
   end
 end
