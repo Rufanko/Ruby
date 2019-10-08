@@ -8,7 +8,7 @@ require_relative 'passengervagon.rb'
 require_relative 'cargovagon.rb'
 require_relative 'main_menu.rb'
 require_relative 'class_menu.rb'
-
+require_relative 'vagons.rb'
 class Mainmenu
   def run
     rr = Menu.new
@@ -72,6 +72,8 @@ class Mainmenu
 
         when '9'
           rr.get_back
+        when '10'
+          rr.reserve_space
 
       end
 
@@ -143,6 +145,7 @@ class Mainmenu
     puts '7. Принять маршрут'
     puts '8. Переместиться на следующую станцию '
     puts '9. Переместиться на предыдущую станцию'
+    puts '10. Занять место в вагоне'
     puts '0. Назад'
   end
 

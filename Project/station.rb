@@ -34,6 +34,10 @@ class Station
     @trainlist.count { |train| train.type == type }
   end
 
+  def enumerate
+    trainlist.each { |train| yield(train) } if block_given?
+  end
+
   protected
 
   def validate!

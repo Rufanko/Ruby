@@ -1,12 +1,8 @@
 # frozen_string_literal: true
 
 class CargoTrain < Train
-  def initialize(number)
-    super(type, number)
-  end
-
-  def type
-    'Cargo'
+  def initialize(type = 'Cargo', number)
+    super
   end
 
   def take_vagon(vagon)
