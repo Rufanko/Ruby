@@ -102,11 +102,11 @@ class Mainmenu
             rr.trainnumber
 
           when '5'
-            rr.vagonlist
+            rr.vagonlist2
           end
 
         when '2'
-          rr.list_of_trains
+          rr.list_of_trains2
 
         when '3'
           rr.allstations

@@ -1,9 +1,10 @@
 # frozen_string_literal: true
 
 class CargoTrain < Train
-  def initialize(type = 'Cargo', number)
+  def initialize(number)
     super
-  end
+    @type = 'Cargo'
+ end
 
   def take_vagon(vagon)
     super vagon if vagon.instance_of?(Cargovagon)

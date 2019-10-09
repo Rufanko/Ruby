@@ -24,7 +24,13 @@ class Menu
     putstrain
     i = gets.to_i
     @trains[i].list_of_vagons.each { |vagon| print "Вагон номер: #{vagon.number},  Тип: #{vagon.type}, Свободных мест/объем: #{vagon.free_space}" }
-    end
+  end
+
+  def vagonlist2
+    putstrain
+    i = gets.to_i
+    @trains[i]&.enumerate { |vagon| print "\nВагон номер: #{vagon.number}, \nТип: #{vagon.type}, \nСвободных мест/объем: #{vagon.free_space}, \nЗанятые места/объем : #{vagon.reserved_space} \n" }
+  end
 
   def create_train
     puts 'Выберите тип поезда'
@@ -220,6 +226,12 @@ class Menu
     i = gets.to_i
     @stationlist[i]&.trainlist&.each { |x| print " Поезд номер: #{x.number}, Тип: #{x.type}, Количество вагонов :#{x.vagoncounter}" }
     end
+
+  def list_of_trains2
+    putsstation
+    i = gets.to_i
+    @stationlist[i]&.enumerate { |train| print " Поезд номер: #{train.number}, Тип: #{train.type}, Количество вагонов :#{train.vagoncounter}" }
+  end
 
   def allstations
     putsroute

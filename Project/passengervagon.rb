@@ -2,7 +2,12 @@
 
 require_relative 'module_manufacturer.rb'
 class Passengervagon < Vagon
-  def type
+  def initialize(number = @@vagonnumber, total_space)
+    super
     @type = 'Passenger'
- end
+  end
+
+  def take_space
+    super(1)
+  end
 end

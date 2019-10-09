@@ -2,8 +2,8 @@
 
 require_relative 'module_manufacturer.rb'
 class Cargovagon < Vagon
-  def type
+  def initialize(number = @@vagonnumber, total_space)
+    super
     @type = 'Cargo'
   end
-  # end
 end

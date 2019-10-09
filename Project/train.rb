@@ -6,11 +6,11 @@ class Train
   include Valid
   include Manufacturer
   include InstanceCounter
-  attr_accessor :list_of_vagons, :type, :number, :speed, :vagoncounter
+  attr_accessor :list_of_vagons, :number, :speed, :vagoncounter
+  attr_reader :type
   @@all_trains = {}
   NUMBER_FORMAT = /^([a-z]|[1-9]){3}-?([a-z]|[1-9]){2}$/.freeze # /\w{3}-?\w{2}/
-  def initialize(type, number)
-    @type = type
+  def initialize(number)
     @number = number
     validate!
     @list_of_vagons = []
@@ -89,7 +89,7 @@ class Train
   protected
 
   def validate!
-    raise "type can't be nil" if type.nil?
+    # raise "type can't be nil" if type.nil?
     raise "number can't be nil" if number.nil?
     raise 'number has invalid format' if number !~ NUMBER_FORMAT
   end
