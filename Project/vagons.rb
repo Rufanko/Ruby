@@ -9,7 +9,6 @@ class Vagon
     @number = number
     @total_space = total_space
     @free_space = total_space
-    @reserved_space = 0
     @@vagonnumber += 1
    end
 
@@ -18,6 +17,6 @@ class Vagon
   end
 
   def reserved_space
-    @reserved_space = @total_space - @free_space
+    reserved_space = @total_space - @free_space
   end
 end

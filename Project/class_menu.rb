@@ -181,7 +181,7 @@ class Menu
       space = gets.to_i
       trains[i]&.list_of_vagons[k]&.take_space(space)
     else puts ' Занято одно место'
-         trains[i]&.list_of_vagons[k]&.take_space(space = 1)
+         trains[i]&.list_of_vagons[k]&.take_space
     end
  end
 
