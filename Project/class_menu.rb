@@ -23,8 +23,14 @@ class Menu
   def vagonlist
     putstrain
     i = gets.to_i
-    puts @trains[i].list_of_vagons
-    end
+    @trains[i].list_of_vagons.each { |vagon| print "Вагон номер: #{vagon.number},  Тип: #{vagon.type}, Свободных мест/объем: #{vagon.free_space}" }
+  end
+
+  def vagonlist2
+    putstrain
+    i = gets.to_i
+    @trains[i]&.enumerate { |vagon| print "\nВагон номер: #{vagon.number}, \nТип: #{vagon.type}, \nСвободных мест/объем: #{vagon.free_space}, \nЗанятые места/объем : #{vagon.reserved_space} \n" }
+  end
 
   def create_train
     puts 'Выберите тип поезда'
@@ -80,14 +86,14 @@ class Menu
 
     case users_string
     when '1'
-      puts 'Введите название экзмепляра класса'
-      vagonname = gets.chomp!
-      @vagons << vagonname = Passengervagon.new
+      puts 'Введите количество мест'
+      space = gets.to_i
+      @vagons << Passengervagon.new(space)
 
     when '2'
-      puts 'Введите название экзмепляра класса'
-      vagonname = gets.chomp!
-      @vagons << vagonname = Cargovagon.new
+      puts 'Введите объем'
+      volume = gets.to_i
+      @vagons << vagonname = Cargovagon.new(volume)
     end
     end
 
@@ -96,7 +102,7 @@ class Menu
     i = gets.to_i
     puts 'Выберите вагон (введите соответствующий индекс массива)'
     j = -1
-    @vagons.each { |x| puts "Введите #{j += 1}, чтобы выбрать вагон", x }
+    @vagons.each { |x| puts "Введите #{j += 1}, чтобы выбрать вагон номер ", x.number }
     k = gets.to_i
     if !@trains[i].nil?
       @trains[i].take_vagon(@vagons[k])
@@ -163,6 +169,22 @@ class Menu
     @trains[i].route_add(@routes[k]) if !@trains[i].nil? && !@routes[k].nil?
      end
 
+  def reserve_space
+    putstrain
+    i = gets.to_i
+    puts 'Выберите вагон (введите соответствующий индекс массива)'
+    z = -1
+    @trains[i].list_of_vagons.each { |x| puts "Введите #{z += 1}, чтобы выбрать вагон номер ", x.number }
+    k = gets.to_i
+    if trains[i]&.list_of_vagons[k]&.instance_of?(Cargovagon)
+      puts 'Введите объем'
+      space = gets.to_i
+      trains[i]&.list_of_vagons[k]&.take_space(space)
+    else puts ' Занято одно место'
+         trains[i]&.list_of_vagons[k]&.take_space
+    end
+ end
+
   def move_forward
     putstrain
     i = gets.to_i
@@ -202,10 +224,14 @@ class Menu
   def list_of_trains
     putsstation
     i = gets.to_i
-    unless @stationlist[i].nil?
-      puts @stationlist[i].trainlist.each { |x| puts x.number }
+    @stationlist[i]&.trainlist&.each { |x| print " Поезд номер: #{x.number}, Тип: #{x.type}, Количество вагонов :#{x.vagoncounter}" }
     end
-    end
+
+  def list_of_trains2
+    putsstation
+    i = gets.to_i
+    @stationlist[i]&.enumerate { |train| print " Поезд номер: #{train.number}, Тип: #{train.type}, Количество вагонов :#{train.vagoncounter}" }
+  end
 
   def allstations
     putsroute
@@ -225,7 +251,7 @@ class Menu
     l = i
     puts 'Выберите вагон (введите соответствующий индекс массива)'
     z = 0
-    @trains[l].list_of_vagons.each { |_x| puts "Введите #{z += 1}, чтобы выбрать вагон " }
+    @trains[l].list_of_vagons.each { |x| puts "Введите #{z += 1}, чтобы выбрать вагон номер ", x.number }
     end
 
   def putsstation(_vagons = @stationlist)
