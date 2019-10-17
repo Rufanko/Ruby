@@ -4,7 +4,6 @@ require_relative 'instance_counter.rb'
 require_relative 'module_manufacturer.rb'
 
 class Route
-  include Valid
   include InstanceCounter
   attr_reader :stations
 

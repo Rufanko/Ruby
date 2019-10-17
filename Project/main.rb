@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require_relative 'validation.rb'
 require_relative 'vagons.rb'
 require_relative 'train.rb'
 require_relative 'station.rb'
