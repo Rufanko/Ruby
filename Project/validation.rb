@@ -17,21 +17,21 @@ module Validation
   module Instancemethods
     def validate!
       self.class.validation_array.each do |name, type, args|
-        var_name = instance_variable_get("@#{name}")
-        send("validate_#{type}", var_name, args)
+        value = instance_variable_get("@#{name}")
+        send("validate_#{type}", value, args)
       end
     end
 
-    def validate_presence(var_name, _args)
-      raise "var name can't be nil " if var_name.nil?
+    def validate_presence(value, _args)
+      raise "var name can't be nil " if value.nil?
     end
 
-    def validate_format(var_name, args)
-      raise 'format_error' if var_name !~ args
+    def validate_format(value, args)
+      raise 'format_error' if value !~ args
     end
 
-    def validate_type(var_name, args)
-      raise 'type error' unless var_name.is_a? args
+    def validate_type(value, args)
+      raise 'type error' unless value.is_a? args
     end
 
     def valid?

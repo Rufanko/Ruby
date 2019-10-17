@@ -88,12 +88,4 @@ class Train
   def enumerate
     list_of_vagons.each { |vagon| yield(vagon) } if block_given?
   end
-
-  # protected
-
-  # def validate!
-  # raise "type can't be nil" if type.nil?
-  # raise "number can't be nil" if number.nil?
-  # raise 'number has invalid format' if number !~ NUMBER_FORMAT
-  # end
 end
