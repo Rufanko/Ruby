@@ -1,15 +1,18 @@
 # frozen_string_literal: true
 
+require_relative 'validation.rb'
 require_relative 'module_manufacturer.rb'
 require_relative 'instance_counter.rb'
 class Train
-  include Valid
+  include Validation
   include Manufacturer
   include InstanceCounter
   attr_accessor :list_of_vagons, :number, :speed, :vagoncounter
-  attr_reader :type
-  @@all_trains = {}
   NUMBER_FORMAT = /^([a-z]|[1-9]){3}-?([a-z]|[1-9]){2}$/.freeze # /\w{3}-?\w{2}/
+  attr_reader :type
+  validate :number, :format, NUMBER_FORMAT
+  @@all_trains = {}
+
   def initialize(number)
     @number = number
     validate!
@@ -84,13 +87,5 @@ class Train
 
   def enumerate
     list_of_vagons.each { |vagon| yield(vagon) } if block_given?
-  end
-
-  protected
-
-  def validate!
-    # raise "type can't be nil" if type.nil?
-    raise "number can't be nil" if number.nil?
-    raise 'number has invalid format' if number !~ NUMBER_FORMAT
   end
 end

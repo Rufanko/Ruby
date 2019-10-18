@@ -2,12 +2,14 @@
 
 require_relative 'instance_counter.rb'
 require_relative 'module_manufacturer.rb'
+require_relative 'validation.rb'
 class Station
-  include Valid
   include InstanceCounter
+  include Validation
   attr_reader :trainlist, :name
-
   NAME_FORMAT = /^([a-zA-Z]){2,12}$/.freeze
+  validate :name, :format, NAME_FORMAT
+
   @@allstations = []
 
   def initialize(name)
@@ -40,8 +42,8 @@ class Station
 
   protected
 
-  def validate!
-    raise "name can't be nil" if name.nil?
-    raise 'name has invalid format' if name !~ NAME_FORMAT
-end
+  # def validate!
+  # raise "name can't be nil" if name.nil?
+  # raise 'name has invalid format' if name !~ NAME_FORMAT
+  # end
 end
